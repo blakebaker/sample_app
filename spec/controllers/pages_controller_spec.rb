@@ -30,6 +30,7 @@ describe PagesController do
     end
   end
 
+
   describe "GET 'about'" do
     it "should be successful" do
       get 'about'
