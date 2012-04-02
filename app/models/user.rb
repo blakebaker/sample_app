@@ -38,13 +38,22 @@ class User < ActiveRecord::Base
     return nil  if user.nil?
     return user if user.has_password?(submitted_password)
   end
-  private
+private
 
     def encrypt_password
+      self.salt = make_salt unless has_password?(password)
       self.encrypted_password = encrypt(password)
     end
 
     def encrypt(string)
-      string # Only a temporary implementation!
+      secure_hash("#{salt}--#{string}")
+    end
+
+    def make_salt
+      secure_hash("#{Time.now.utc}--#{password}")
+    end
+
+    def secure_hash(string)
+      Digest::SHA2.hexdigest(string)
     end
 end
