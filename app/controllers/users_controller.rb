@@ -19,5 +19,6 @@ class UsersController < ApplicationController
     else
       @title = "Sign up"
       render 'new'
+    end
   end
 end
